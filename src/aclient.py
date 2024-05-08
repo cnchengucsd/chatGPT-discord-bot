@@ -1,3 +1,16 @@
+"""
+Code Review:
+- Inconsistent Environment Variable Management - use of os.getenv can lead to hard-to-track bugs if the environment is misconfigured
+- Too broad exception handling - `except Exception as e` should be avoided as it can hide different types of errors
+- Potential memory leak with conversation history - the conversation history is never cleared, which can lead to memory leaks
+- Redundant Checks and Confusing Logic - Checks like `if self.current_channel is not None` before processing messages is in a continuous running coroutine.
+- Inconsistent Variable Naming - the variable `user_message` is used in some places and `message` in others, which can be confusing. `enqueue_message` also performs an action if not replying to all, which can be confusing.
+- Hard coded magic numbers - Makes the code less maintainable and harder to understand
+- Code duplication - `handle_response` methond handles boght `g4f` and `openai` responses, which can be refactored to a common method
+- Lack of comments and docstrings- Makes the code harder to understand and maintain
+- Inconsistent Error Handling and Messaging - Error handling is inconsistent and can be improved
+"""
+
 import os
 import discord
 import asyncio
